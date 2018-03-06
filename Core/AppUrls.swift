@@ -39,6 +39,8 @@ public struct AppUrls {
         static let surrogates = "\(home)/contentblocking.js?l=surrogates"
         static let atb = "\(home)/atb.js"
         static let exti = "\(home)/exti/"
+        static let bang = "\(home)/bang.js"
+        
     }
 
     private struct Param {
@@ -96,6 +98,10 @@ public struct AppUrls {
     
     public var surrogates: URL {
         return URL(string: Url.surrogates)!
+    }
+    
+    public var bang: URL {
+        return URL(string: Url.bang)!
     }
 
     public var atb: URL {

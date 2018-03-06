@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         startOnboardingFlowIfNotSeenBefore()
         if appIsLaunching {
             appIsLaunching = false
-            BlockerListsLoader().start(completion: nil)
+            startDownloads { newData in }
             displayAuthenticationWindow()
             beginAuthentication()
             initialiseBackgroundFetch(application)
@@ -89,13 +89,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         Logger.log(items: #function)
 
-        BlockerListsLoader().start { newData in
+        startDownloads { newData in
             completionHandler(newData ? .newData : .noData)
         }
 
     }
 
     // MARK: prvate
+    
+    private func startDownloads(completion: @escaping (Bool) -> Void) {
+
+        DispatchQueue.global(qos: .background).async {
+            
+            var blockerListsUpdated = false
+            var bangListUpdated = false
+            
+            let semaphore = DispatchSemaphore(value: 2)
+            
+            BlockerListsLoader().start { newData in
+                blockerListsUpdated = newData
+                semaphore.signal()
+            }
+            
+            BangLoader().start { newData in
+                bangListUpdated = newData
+                semaphore.signal()
+            }
+            
+            completion(bangListUpdated || blockerListsUpdated)
+        }
+
+    }
 
     private func initialiseBackgroundFetch(_ application: UIApplication) {
         application.setMinimumBackgroundFetchInterval(60 * 60 * 24)

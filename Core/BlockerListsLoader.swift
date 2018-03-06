@@ -23,6 +23,7 @@ public typealias BlockerListsLoaderCompletion = (Bool) -> Void
 
 public class BlockerListsLoader {
 
+    private let blockerListRequest: BlockerListRequest
     private var easylistStore = EasylistStore()
     private var disconnectStore = DisconnectMeStore()
     private var httpsUpgradeStore = HTTPSUpgradeStore()
@@ -36,7 +37,9 @@ public class BlockerListsLoader {
 
     private var newDataItems = 0
 
-    public init() { }
+    public init(blockerListRequest: BlockerListRequest = DefaultBlockerListRequest()) {
+        self.blockerListRequest = blockerListRequest
+    }
 
     public func start(completion: BlockerListsLoaderCompletion?) {
 
@@ -55,8 +58,6 @@ public class BlockerListsLoader {
     }
 
     private func startRequests(with semaphore: DispatchSemaphore) -> Int {
-
-        let blockerListRequest = BlockerListRequest()
 
         blockerListRequest.request(.disconnectMe) { (data) in
             if let data = data {

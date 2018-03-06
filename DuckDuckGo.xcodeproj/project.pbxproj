@@ -44,6 +44,7 @@
 		85200FA41FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA21FBC607E001AF290 /* NetworkLeaderboard.xcdatamodeld */; };
 		85200FA61FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA51FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift */; };
 		85200FA81FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */; };
+		852AF69120502E6800D1DDCB /* Bangs.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 852AF68F20502E6800D1DDCB /* Bangs.xcdatamodeld */; };
 		8531A08E1F9950E6000484F0 /* WhitelistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */; };
 		85325A8D2024BB7C003EB195 /* detection.js in Resources */ = {isa = PBXBuildFile; fileRef = 85325A8C2024BB7C003EB195 /* detection.js */; };
 		8533133F1F98EA7900E061A5 /* WhitelistManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */; };
@@ -114,6 +115,9 @@
 		85F1E9C11FB7D19A00A75AC1 /* ddgissuercert.der in Resources */ = {isa = PBXBuildFile; fileRef = 85F1E9C01FB7D19A00A75AC1 /* ddgissuercert.der */; };
 		85F45B2A1F875DFF00DB1978 /* BlockerListRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F45B291F875DFF00DB1978 /* BlockerListRequest.swift */; };
 		85F591251FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85F591241FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift */; };
+		85FFE993204ECA0A0051395B /* BangLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FFE992204ECA0A0051395B /* BangLoader.swift */; };
+		85FFE995204ECF2C0051395B /* BangParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FFE994204ECF2C0051395B /* BangParser.swift */; };
+		85FFE997204ECF910051395B /* BangStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FFE996204ECF910051395B /* BangStorage.swift */; };
 		F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */; };
 		F103073B1E7C91330059FEC7 /* BookmarksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */; };
 		F10307681E7D67BA0059FEC7 /* favicon.js in Resources */ = {isa = PBXBuildFile; fileRef = F10307671E7D67BA0059FEC7 /* favicon.js */; };
@@ -388,6 +392,7 @@
 		85200FA31FBC607E001AF290 /* NetworkLeaderboard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NetworkLeaderboard.xcdatamodel; sourceTree = "<group>"; };
 		85200FA51FBCCD58001AF290 /* PrivacyProtectionNetworkLeaderboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyProtectionNetworkLeaderboardController.swift; sourceTree = "<group>"; };
 		85200FA71FBDE472001AF290 /* UIColorPrivacyProtectionExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorPrivacyProtectionExtension.swift; sourceTree = "<group>"; };
+		852AF69020502E6800D1DDCB /* Bangs.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Bangs.xcdatamodel; sourceTree = "<group>"; };
 		8531A08D1F9950E6000484F0 /* WhitelistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitelistViewController.swift; sourceTree = "<group>"; };
 		85325A8C2024BB7C003EB195 /* detection.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = detection.js; sourceTree = "<group>"; };
 		8533133C1F98E9DB00E061A5 /* WhitelistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WhitelistManager.swift; path = ../DuckDuckGo/WhitelistManager.swift; sourceTree = "<group>"; };
@@ -464,6 +469,9 @@
 		85F1E9C01FB7D19A00A75AC1 /* ddgissuercert.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ddgissuercert.der; sourceTree = "<group>"; };
 		85F45B291F875DFF00DB1978 /* BlockerListRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockerListRequest.swift; sourceTree = "<group>"; };
 		85F591241FD1BFAA00746C77 /* DisconnectMeTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectMeTrackerTests.swift; sourceTree = "<group>"; };
+		85FFE992204ECA0A0051395B /* BangLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BangLoader.swift; sourceTree = "<group>"; };
+		85FFE994204ECF2C0051395B /* BangParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BangParser.swift; sourceTree = "<group>"; };
+		85FFE996204ECF910051395B /* BangStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BangStorage.swift; sourceTree = "<group>"; };
 		F10307381E7C5E310059FEC7 /* NoBookmarksCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoBookmarksCell.swift; sourceTree = "<group>"; };
 		F103073A1E7C91330059FEC7 /* BookmarksDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksDataSource.swift; sourceTree = "<group>"; };
 		F10307671E7D67BA0059FEC7 /* favicon.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = favicon.js; sourceTree = "<group>"; };
@@ -957,6 +965,17 @@
 			name = UI;
 			sourceTree = "<group>";
 		};
+		852AF68E20502E3C00D1DDCB /* Bangs */ = {
+			isa = PBXGroup;
+			children = (
+				85FFE996204ECF910051395B /* BangStorage.swift */,
+				85FFE994204ECF2C0051395B /* BangParser.swift */,
+				85FFE992204ECA0A0051395B /* BangLoader.swift */,
+				852AF68F20502E6800D1DDCB /* Bangs.xcdatamodeld */,
+			);
+			name = Bangs;
+			sourceTree = "<group>";
+		};
 		8533133B1F98E9C000E061A5 /* PrivacyProtection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1294,6 +1313,7 @@
 			isa = PBXGroup;
 			children = (
 				F11E23051ED33D8B00523BC9 /* API */,
+				852AF68E20502E3C00D1DDCB /* Bangs */,
 				F1CE42A71ECA0A520074A8DF /* Bookmarks */,
 				837774491F8E1ECE00E17A29 /* ContentBlocker */,
 				F143C2E61E4A4CD400CFDE3A /* Core.h */,
@@ -2358,6 +2378,7 @@
 				F143C33B1E4A9A9200CFDE3A /* WebEventsDelegate.swift in Sources */,
 				F16394071ECE01E400DDD653 /* DisconnectMeTrackersParser.swift in Sources */,
 				85A53ECA200D1FA20010D13F /* SurrogateStore.swift in Sources */,
+				85FFE995204ECF2C0051395B /* BangParser.swift in Sources */,
 				F1134EB31F40AD2500B73467 /* Atb.swift in Sources */,
 				85782E261F33E24900313000 /* UserText.swift in Sources */,
 				F143C3291E4A9A0E00CFDE3A /* URLExtension.swift in Sources */,
@@ -2365,9 +2386,11 @@
 				F143C32E1E4A9A4800CFDE3A /* RoundedRectangleView.swift in Sources */,
 				F1DE785A1E5CD2A70058895A /* UIViewExtension.swift in Sources */,
 				F143C33D1E4A9A9200CFDE3A /* WKWebViewExtension.swift in Sources */,
+				85FFE993204ECA0A0051395B /* BangLoader.swift in Sources */,
 				F11E22F61ED31CB600523BC9 /* JsonError.swift in Sources */,
 				F1134EB51F40AEEA00B73467 /* StatisticsLoader.swift in Sources */,
 				85C271D11FCF33C8007216B4 /* DetectedTracker.swift in Sources */,
+				85FFE997204ECF910051395B /* BangStorage.swift in Sources */,
 				F143C3281E4A9A0E00CFDE3A /* StringExtension.swift in Sources */,
 				85C271DF1FD044D7007216B4 /* HTTPSUpgradePersistence.swift in Sources */,
 				830381C01F850AAF00863075 /* WKWebViewConfigurationExtension.swift in Sources */,
@@ -2408,6 +2431,7 @@
 				F11E22F91ED33D8600523BC9 /* ApiRequestError.swift in Sources */,
 				F14E6EE81E773BA9001A184E /* InterfaceMeasurement.swift in Sources */,
 				F17D723C1E8BB374003E8B0E /* AppDeepLinks.swift in Sources */,
+				852AF69120502E6800D1DDCB /* Bangs.xcdatamodeld in Sources */,
 				F10E522D1E946F8800CE1253 /* NSAttributedStringExtension.swift in Sources */,
 				F143C3171E4A99D200CFDE3A /* AppUrls.swift in Sources */,
 			);
@@ -2994,6 +3018,16 @@
 			);
 			currentVersion = 85200FA31FBC607E001AF290 /* NetworkLeaderboard.xcdatamodel */;
 			path = NetworkLeaderboard.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		852AF68F20502E6800D1DDCB /* Bangs.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				852AF69020502E6800D1DDCB /* Bangs.xcdatamodel */,
+			);
+			currentVersion = 852AF69020502E6800D1DDCB /* Bangs.xcdatamodel */;
+			path = Bangs.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

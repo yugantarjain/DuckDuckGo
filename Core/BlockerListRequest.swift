@@ -19,28 +19,37 @@
 
 import Foundation
 
-class BlockerListRequest {
+public enum BlockerList: String {
+    
+    case disconnectMe = "disconnectme"
+    case easylist = "easylist"
+    case easylistPrivacy = "easyprivacy"
+    case trackersWhitelist
+    case httpsUpgrade = "https"
+    case surrogates
+    case bang // TODO refactor this class to not be "blocker list" specific
+    
+}
 
-    enum List: String {
+public protocol BlockerListRequest {
+    
+    func request(_ list: BlockerList, completion:@escaping (Data?) -> Void)
+    
+    var requestCount: Int { get }
 
-        case disconnectMe = "disconnectme"
-        case easylist = "easylist"
-        case easylistPrivacy = "easyprivacy"
-        case trackersWhitelist
-        case httpsUpgrade = "https"
-        case surrogates
+}
 
-    }
+public class DefaultBlockerListRequest: BlockerListRequest {
 
-    var requestCount = 0
+    public var requestCount = 0
     
     let etagStorage: BlockerListETagStorage
 
-    init(etagStorage: BlockerListETagStorage = UserDefaultsETagStorage()) {
+    public init(etagStorage: BlockerListETagStorage = UserDefaultsETagStorage()) {
         self.etagStorage = etagStorage
     }
 
-    func request(_ list: List, completion:@escaping (Data?) -> Void) {
+    public func request(_ list: BlockerList, completion:@escaping (Data?) -> Void) {
         requestCount += 1
         APIRequest.request(url: url(for: list)) { (response, error) in
 
@@ -70,7 +79,7 @@ class BlockerListRequest {
         }
     }
 
-    private func url(for list: List) -> URL {
+    private func url(for list: BlockerList) -> URL {
         let appUrls = AppUrls()
 
         switch(list) {
@@ -80,31 +89,34 @@ class BlockerListRequest {
             case .httpsUpgrade: return appUrls.httpsUpgradeList
             case .trackersWhitelist: return appUrls.trackersWhitelist
             case .surrogates: return appUrls.surrogates
+            case .bang: return appUrls.bang
         }
 
     }
     
 }
 
-protocol BlockerListETagStorage {
+public protocol BlockerListETagStorage {
 
-    func set(etag: String?, for list: BlockerListRequest.List)
+    func set(etag: String?, for list: BlockerList)
 
-    func etag(for list: BlockerListRequest.List) -> String?
+    func etag(for list: BlockerList) -> String?
 
 }
 
-class UserDefaultsETagStorage: BlockerListETagStorage {
+public class UserDefaultsETagStorage: BlockerListETagStorage {
 
     lazy var defaults = UserDefaults(suiteName: "com.duckduckgo.blocker-list.etags")
+    
+    public init() {}
 
-    func etag(for list: BlockerListRequest.List) -> String? {
+    public func etag(for list: BlockerList) -> String? {
         let etag = defaults?.string(forKey: list.rawValue)
         Logger.log(items: "stored etag for ", list.rawValue, etag as Any)
         return etag
     }
 
-    func set(etag: String?, for list: BlockerListRequest.List) {
+    public func set(etag: String?, for list: BlockerList) {
         defaults?.set(etag, forKey: list.rawValue)
     }
     
