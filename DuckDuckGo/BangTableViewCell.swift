@@ -1,5 +1,5 @@
 //
-//  AutocompleteParser.swift
+//  BangTableViewCell.swift
 //  DuckDuckGo
 //
 //  Copyright © 2017 DuckDuckGo. All rights reserved.
@@ -18,27 +18,21 @@
 //
 
 
-import Foundation
+import UIKit
 import Core
 
-class AutocompleteParser {
+class BangTableViewCell: UITableViewCell {
     
-    struct Autocomplete: Decodable {
-        
-        let phrase: String
-        
-    }
+    static let reuseIdentifier = "BangTableViewCell"
     
-    func convert(fromJsonData data: Data) throws -> [Suggestion] {
-       
-        guard let results = try? JSONDecoder().decode(Array<Autocomplete>.self, from: data) else { return [] }
-        
-        var suggestions = [Suggestion]()
-        for result in results {
-            suggestions.append(Suggestion(type: "phrase", suggestion: result.phrase))
-        }
-        
-        return suggestions
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var faviconImage: UIImageView!
+    @IBOutlet weak var trigger: UILabel!
+
+    func update(withBang bang: BangEntity) {
+        nameLabel.text = bang.name
+        trigger.text = "!\(bang.trigger!)"
     }
     
 }
+

@@ -28,7 +28,7 @@ public protocol BangStorage {
     
     func findBangs(withTriggerStartingWith trigger: String) -> [BangEntity]
     
-    func create(trigger: String, domain: String, name: String)
+    func create(trigger: String, domain: String, name: String, score: Int)
     
     func save()
     
@@ -56,17 +56,25 @@ public class CoreDataBangStorage: BangStorage {
     
     public func findBangs(withTriggerStartingWith trigger: String) -> [BangEntity] {
         let request = newFetchRequest()
-        request.predicate = NSPredicate(format: "trigger beginsWith [cd] %@", trigger)
+        
+        if trigger.isEmpty {
+            request.sortDescriptors = [ NSSortDescriptor(key: "score", ascending: false) ]
+        } else {
+            request.predicate = NSPredicate(format: "trigger beginsWith %@", trigger)
+            request.sortDescriptors = [ NSSortDescriptor(key: "trigger", ascending: true) ]
+        }
+        
         guard let result = try? container.managedObjectContext.fetch(request) else { return [] }
         return result
     }
     
-    public func create(trigger: String, domain: String, name: String) {
+    public func create(trigger: String, domain: String, name: String, score: Int) {
         let entityName = String(describing: BangEntity.self)
         let entity = NSEntityDescription.insertNewObject(forEntityName: entityName, into: container.managedObjectContext) as! BangEntity
         entity.domain = domain
         entity.trigger = trigger
         entity.name = name
+        entity.score = Int64(score)
     }
     
     public func save() {

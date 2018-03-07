@@ -25,11 +25,13 @@ class AutocompleteViewController: UIViewController {
     
     weak var delegate: AutocompleteViewControllerDelegate?
 
+    private lazy var bangStorage = CoreDataBangStorage()
     private lazy var parser = AutocompleteParser()
     private var lastRequest: AutocompleteRequest?
     
     fileprivate var query = ""
-    fileprivate var suggestions = [Suggestion]()
+    fileprivate var suggestions: [Suggestion]?
+    fileprivate var bangs: [BangEntity]?
     fileprivate let minItems = 1
     fileprivate let maxItems = 6
     
@@ -74,12 +76,25 @@ class AutocompleteViewController: UIViewController {
     func updateQuery(query: String) {
         self.query = query
         cancelInFlightRequests()
-        requestSuggestions(query: query)
+        
+        let queryWords = query.components(separatedBy: " ")
+        if let last = queryWords.last, last.hasPrefix("!"), query.countOccurences(of: "!") == 1 {
+            requestBang(bang: queryWords.last!)
+        } else {
+            requestSuggestions(query: query)
+        }
+        
     }
     
     @IBAction func onPlusButtonPressed(_ button: UIButton) {
-        let suggestion = suggestions[button.tag]
+        let suggestion = suggestions![button.tag]
         delegate?.autocomplete(pressedPlusButtonForSuggestion: suggestion.suggestion)
+    }
+    
+    private func requestBang(bang: String) {
+        suggestions = nil
+        bangs = bangStorage.findBangs(withTriggerStartingWith: String(bang.dropFirst()))
+        tableView.reloadData()
     }
     
     private func cancelInFlightRequests() {
@@ -89,6 +104,7 @@ class AutocompleteViewController: UIViewController {
     }
     
     private func requestSuggestions(query: String) {
+        bangs = nil
         lastRequest = AutocompleteRequest(query: query, parser: parser)
         lastRequest!.execute() { [weak self] (suggestions, error) in
             guard let suggestions = suggestions, error == nil else {
@@ -112,40 +128,72 @@ class AutocompleteViewController: UIViewController {
 extension AutocompleteViewController: UITableViewDataSource {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if suggestions.isEmpty {
+        
+        if let suggestions = suggestions, !suggestions.isEmpty {
+            return suggestionsCell(forIndexPath: indexPath)
+        } else if let bangs = bangs, !bangs.isEmpty {
+            return bangsCell(forIndexPath: indexPath)
+        } else {
             return noSuggestionsCell(forIndexPath: indexPath)
         }
-        return suggestionsCell(forIndexPath: indexPath)
+        
     }
     
     private func suggestionsCell(forIndexPath indexPath: IndexPath) -> UITableViewCell {
         let type = SuggestionTableViewCell.reuseIdentifier
         let cell = tableView.dequeueReusableCell(withIdentifier: type, for: indexPath) as! SuggestionTableViewCell
-        cell.updateFor(query: query, suggestion: suggestions[indexPath.row])
+        cell.updateFor(query: query, suggestion: suggestions![indexPath.row])
         cell.plusButton.tag = indexPath.row
         return cell
     }
     
+    private func bangsCell(forIndexPath indexPath: IndexPath) -> UITableViewCell {
+        let type = BangTableViewCell.reuseIdentifier
+        let cell = tableView.dequeueReusableCell(withIdentifier: type, for: indexPath) as! BangTableViewCell
+        cell.update(withBang: bangs![indexPath.row])
+        return cell
+    }
+
     private func noSuggestionsCell(forIndexPath indexPath: IndexPath) -> UITableViewCell {
         let type = NoSuggestionsTableViewCell.reuseIdentifier
         return tableView.dequeueReusableCell(withIdentifier: type, for: indexPath)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if suggestions.isEmpty {
+        if let suggestions = suggestions, !suggestions.isEmpty {
+            return suggestions.isEmpty ? minItems : min(maxItems, suggestions.count)
+        } else if let bangs = bangs, !bangs.isEmpty {
+            return bangs.isEmpty ? minItems : min(maxItems, bangs.count)
+        } else {
             return minItems
         }
-        if suggestions.count > maxItems {
-            return maxItems
-        }
-        return suggestions.count
     }
 }
 
 extension AutocompleteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let suggestion = suggestions[indexPath.row]
-        delegate?.autocomplete(selectedSuggestion: suggestion.suggestion)
+        if let suggestions = suggestions, !suggestions.isEmpty {
+            
+            let suggestion = suggestions[indexPath.row]
+            delegate?.autocomplete(selectedSuggestion: suggestion.suggestion)
+            
+        } else if let bangs = bangs, !bangs.isEmpty {
+            
+            let trigger = bangs[indexPath.row].trigger!
+            let existingQuery = query.dropLast(query.components(separatedBy: " ").last?.count ?? 0)
+            let newQuery = "\(existingQuery)!\(trigger)"
+
+            print(#function, query, newQuery)
+
+            if newQuery == "!\(trigger)" {
+                delegate?.autocomplete(pressedPlusButtonForSuggestion: "\(newQuery) ")
+                self.bangs = nil
+                tableView.reloadData()
+            } else {
+                delegate?.autocomplete(selectedSuggestion: newQuery)
+            }
+            
+        }
     }
 }
 
@@ -154,3 +202,13 @@ extension AutocompleteViewController: UIGestureRecognizerDelegate {
         return tableView == touch.view
     }
 }
+
+fileprivate extension String {
+    
+    func countOccurences(of: Character) -> Int {
+        let string = filter( { $0 == of })
+        return string.count
+    }
+    
+}
+

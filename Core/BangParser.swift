@@ -34,6 +34,7 @@ class BangParser {
     
     struct Bang: Decodable {
         
+        let r: Int
         let d: String
         let s: String
         let t: String

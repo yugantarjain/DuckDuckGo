@@ -24,7 +24,7 @@ public class BangLoader {
         let storage: BangStorage
         
         func receive(bang: BangParser.Bang) {
-            storage.create(trigger: bang.t, domain: bang.d, name: bang.s)
+            storage.create(trigger: bang.t, domain: bang.d, name: bang.s, score: bang.r)
         }
         
     }
