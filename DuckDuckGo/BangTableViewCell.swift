@@ -26,16 +26,22 @@ class BangTableViewCell: UITableViewCell {
     static let reuseIdentifier = "BangTableViewCell"
     
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var faviconImage: RemoteImageView!
+    @IBOutlet weak var faviconImage: UIImageView!
     @IBOutlet weak var trigger: UILabel!
 
     func update(withBang bang: BangEntity) {
         nameLabel.text = bang.name
         trigger.text = "!\(bang.trigger!)"
-        faviconImage.image = #imageLiteral(resourceName: "SearchLoupe")
         
+        let placeholder = #imageLiteral(resourceName: "SearchLoupe")
+        faviconImage.image = placeholder
         let faviconUrl = AppUrls().faviconUrl(forDomain: bang.domain!)
-        faviconImage.url = faviconUrl
+        faviconImage.kf.setImage(with: faviconUrl, placeholder: placeholder) { image, error, cacheType, url in
+            guard let image = image else { return }
+            if image.size.width == 1 {
+                self.faviconImage.image = placeholder
+            }
+        }
     }
     
 }
