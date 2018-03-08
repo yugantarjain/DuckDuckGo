@@ -26,13 +26,16 @@ class BangTableViewCell: UITableViewCell {
     static let reuseIdentifier = "BangTableViewCell"
     
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var faviconImage: UIImageView!
+    @IBOutlet weak var faviconImage: RemoteImageView!
     @IBOutlet weak var trigger: UILabel!
 
     func update(withBang bang: BangEntity) {
         nameLabel.text = bang.name
         trigger.text = "!\(bang.trigger!)"
+        faviconImage.image = #imageLiteral(resourceName: "SearchLoupe")
+        
+        let faviconUrl = AppUrls().faviconUrl(forDomain: bang.domain!)
+        faviconImage.url = faviconUrl
     }
     
 }
-

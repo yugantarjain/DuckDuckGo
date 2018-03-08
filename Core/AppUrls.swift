@@ -40,9 +40,16 @@ public struct AppUrls {
         static let atb = "\(home)/atb.js"
         static let exti = "\(home)/exti/"
         static let bang = "\(home)/bang.js"
+        static let faviconBase = "https://icons.\(domain)/i/\(Constants.domainPlaceholder).ico"
         
     }
 
+    private struct Constants {
+        
+        static let domainPlaceholder = "${domain}"
+        
+    }
+    
     private struct Param {
         static let search = "q"
         static let source = "t"
@@ -130,6 +137,15 @@ public struct AppUrls {
             return url
         }
         return searchUrl(text: query)
+    }
+    
+    public func faviconUrl(forDomain domain: String) -> URL {
+        if let url = URL(string: Url.faviconBase.replacingOccurrences(of: Constants.domainPlaceholder, with: domain)) {
+            return url
+        }
+        
+        // fallback if domain is invalid for some reason
+        return favicon
     }
     
     public func exti(forAtb atb: String) -> URL {
