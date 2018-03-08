@@ -61,7 +61,7 @@ public class CoreDataBangStorage: BangStorage {
             request.sortDescriptors = [ NSSortDescriptor(key: "score", ascending: false) ]
         } else {
             request.predicate = NSPredicate(format: "trigger beginsWith %@", trigger)
-            request.sortDescriptors = [ NSSortDescriptor(key: "trigger", ascending: true) ]
+            request.sortDescriptors = [ NSSortDescriptor(key: "score", ascending: false), NSSortDescriptor(key: "trigger", ascending: true) ]
         }
         
         guard let result = try? container.managedObjectContext.fetch(request) else { return [] }
@@ -89,5 +89,5 @@ public class CoreDataBangStorage: BangStorage {
     private func newFetchRequest() -> NSFetchRequest<BangEntity> {
         return BangEntity.fetchRequest()
     }
-    
+           
 }
