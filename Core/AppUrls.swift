@@ -40,7 +40,8 @@ public struct AppUrls {
         static let atb = "\(home)/atb.js"
         static let exti = "\(home)/exti/"
         static let bang = "\(home)/bang.js"
-        static let faviconBase = "https://icons.\(domain)/i/\(Constants.domainPlaceholder).ico"
+        
+        static let faviconBase = "https://icons.\(domain)/i/\(Constants.domainPlaceholder).ico?imgFallback=/watrcoolr/img/search-suggestions_default.png"
         
     }
 

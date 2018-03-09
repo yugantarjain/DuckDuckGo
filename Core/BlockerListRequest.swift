@@ -71,6 +71,7 @@ public class DefaultBlockerListRequest: BlockerListRequest {
             let etag = self.etagStorage.etag(for: list)
 
             if etag == nil || etag != response.etag {
+                Logger.log(text: "Returning data for \(list.rawValue) with etag \(String(describing: response.etag))")
                 self.etagStorage.set(etag: response.etag, for: list)
                 completion(data)
             } else {
@@ -112,11 +113,12 @@ public class UserDefaultsETagStorage: BlockerListETagStorage {
 
     public func etag(for list: BlockerList) -> String? {
         let etag = defaults?.string(forKey: list.rawValue)
-        Logger.log(items: "stored etag for ", list.rawValue, etag as Any)
+        Logger.log(items: "etag found for ", list.rawValue, etag as Any)
         return etag
     }
 
     public func set(etag: String?, for list: BlockerList) {
+        Logger.log(items: "setting etag for ", list.rawValue, etag as Any)
         defaults?.set(etag, forKey: list.rawValue)
     }
     
