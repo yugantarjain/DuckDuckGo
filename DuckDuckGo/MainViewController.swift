@@ -38,6 +38,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var notificationContainerTop: NSLayoutConstraint!
     @IBOutlet weak var notificationContainerHeight: NSLayoutConstraint!
     
+    var importBookmarksUID: String?
     weak var notificationView: NotificationView?
     
     var omniBar: OmniBar!
@@ -71,6 +72,11 @@ class MainViewController: UIViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
+        if let controller = segue.destination as? ImportBookmarksViewController {
+            controller.uid = importBookmarksUID
+            return
+        }
+        
         if segue.destination.childViewControllers.count > 0,
             let controller = segue.destination.childViewControllers[0] as? BookmarksViewController {
             controller.delegate = self
@@ -84,6 +90,12 @@ class MainViewController: UIViewController {
             return
         }
 
+    }
+    
+    func importBookmarks(uid: String) {
+        print(#function, uid)
+        importBookmarksUID = uid
+        performSegue(withIdentifier: "importBookmarks", sender: nil)
     }
  
     private func configureTabManager() {

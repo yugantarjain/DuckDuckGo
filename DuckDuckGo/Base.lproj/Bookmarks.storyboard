@@ -130,6 +130,7 @@
                     <connections>
                         <outlet property="actionButton" destination="V4E-YN-xud" id="GMr-Op-cJH"/>
                         <segue destination="Lv2-4U-KaU" kind="presentation" identifier="exportBookmarks" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="L5V-cY-FKl"/>
+                        <segue destination="lhY-DP-3sH" kind="presentation" identifier="importBookmarks" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="xdW-aB-Eab"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVk-wm-1t5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -192,6 +193,63 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyQ-UO-kbK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3013.5999999999999" y="804.64767616191909"/>
+        </scene>
+        <!--Import Bookmarks View Controller-->
+        <scene sceneID="sWe-Z7-6NI">
+            <objects>
+                <viewController storyboardIdentifier="ImportBookmarks" id="lhY-DP-3sH" customClass="ImportBookmarksViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ILA-va-5IX"/>
+                        <viewControllerLayoutGuide type="bottom" id="p2x-bX-HsH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Jum-Z5-v8m">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6pv-DS-737">
+                                <rect key="frame" x="107" y="259" width="160" height="149"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="jDM-Ie-3fs">
+                                        <rect key="frame" x="70" y="64" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Importing bookmarks..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L2J-rn-yqx">
+                                        <rect key="frame" x="10.5" y="21" width="140" height="14"/>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="njq-Fg-zrc">
+                                        <rect key="frame" x="56" y="111" width="48" height="30"/>
+                                        <state key="normal" title="Cancel"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="L2J-rn-yqx" firstAttribute="centerX" secondItem="6pv-DS-737" secondAttribute="centerX" id="BdN-NV-Pf0"/>
+                                    <constraint firstItem="jDM-Ie-3fs" firstAttribute="centerX" secondItem="6pv-DS-737" secondAttribute="centerX" id="GNv-Qa-riH"/>
+                                    <constraint firstItem="L2J-rn-yqx" firstAttribute="top" secondItem="6pv-DS-737" secondAttribute="top" constant="21" id="UTf-9Q-4vR"/>
+                                    <constraint firstItem="njq-Fg-zrc" firstAttribute="centerX" secondItem="6pv-DS-737" secondAttribute="centerX" id="YJA-9u-9fV"/>
+                                    <constraint firstAttribute="height" constant="149" id="eiw-lC-Jcn"/>
+                                    <constraint firstItem="jDM-Ie-3fs" firstAttribute="centerY" secondItem="6pv-DS-737" secondAttribute="centerY" id="nqe-5X-alH"/>
+                                    <constraint firstAttribute="width" constant="160" id="sgX-fd-RAS"/>
+                                    <constraint firstItem="L2J-rn-yqx" firstAttribute="width" secondItem="6pv-DS-737" secondAttribute="width" constant="-20" id="w4r-GV-jBc"/>
+                                    <constraint firstAttribute="bottom" secondItem="njq-Fg-zrc" secondAttribute="bottom" constant="8" id="xgB-TK-bOe"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.25152504279999999" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6pv-DS-737" firstAttribute="centerY" secondItem="Jum-Z5-v8m" secondAttribute="centerY" id="3FE-DE-FDn"/>
+                            <constraint firstItem="6pv-DS-737" firstAttribute="centerX" secondItem="Jum-Z5-v8m" secondAttribute="centerX" id="Y0H-9p-s0H"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="infoView" destination="6pv-DS-737" id="KPg-0f-cM6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zrv-db-bQf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2049" y="1649"/>
         </scene>
     </scenes>
     <resources>

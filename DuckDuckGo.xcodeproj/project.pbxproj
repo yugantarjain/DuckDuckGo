@@ -84,6 +84,7 @@
 		85A1B3B220C6CD9900C18F15 /* CookieStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A1B3B120C6CD9900C18F15 /* CookieStorage.swift */; };
 		85A1B3B420C6D07100C18F15 /* CookieStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A1B3B320C6D07100C18F15 /* CookieStorageTests.swift */; };
 		85A1B5C720C94ACF00C18F15 /* ExportBookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A1B5C620C94ACF00C18F15 /* ExportBookmarksViewController.swift */; };
+		85A1B5C920C95D2C00C18F15 /* ImportBookmarksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A1B5C820C95D2C00C18F15 /* ImportBookmarksViewController.swift */; };
 		85A313972028E78A00327D00 /* release_notes.txt in Resources */ = {isa = PBXBuildFile; fileRef = 85A313962028E78A00327D00 /* release_notes.txt */; };
 		85A53ECA200D1FA20010D13F /* SurrogateStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A53EC9200D1FA20010D13F /* SurrogateStore.swift */; };
 		85AB24A81FA7449D00896A5F /* PrivacyProtection.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */; };
@@ -460,6 +461,7 @@
 		85A1B3B120C6CD9900C18F15 /* CookieStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieStorage.swift; sourceTree = "<group>"; };
 		85A1B3B320C6D07100C18F15 /* CookieStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CookieStorageTests.swift; sourceTree = "<group>"; };
 		85A1B5C620C94ACF00C18F15 /* ExportBookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportBookmarksViewController.swift; sourceTree = "<group>"; };
+		85A1B5C820C95D2C00C18F15 /* ImportBookmarksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportBookmarksViewController.swift; sourceTree = "<group>"; };
 		85A313962028E78A00327D00 /* release_notes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = release_notes.txt; path = fastlane/metadata/default/release_notes.txt; sourceTree = "<group>"; };
 		85A53EC9200D1FA20010D13F /* SurrogateStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurrogateStore.swift; sourceTree = "<group>"; };
 		85AB24A71FA7449D00896A5F /* PrivacyProtection.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PrivacyProtection.storyboard; sourceTree = "<group>"; };
@@ -1525,6 +1527,7 @@
 				F1D796EB1E7AB8930019D451 /* SaveBookmarkActivity.swift */,
 				F103076C1E800F5C0059FEC7 /* EditBookmarkAlert.swift */,
 				85A1B5C620C94ACF00C18F15 /* ExportBookmarksViewController.swift */,
+				85A1B5C820C95D2C00C18F15 /* ImportBookmarksViewController.swift */,
 			);
 			name = Bookmarks;
 			sourceTree = "<group>";
@@ -2354,6 +2357,7 @@
 				8382E9F2207D61F000708757 /* TabIconMaker.swift in Sources */,
 				F10307391E7C5E310059FEC7 /* NoBookmarksCell.swift in Sources */,
 				F164DDBF1F2A509200010DD2 /* FireAnimation.swift in Sources */,
+				85A1B5C920C95D2C00C18F15 /* ImportBookmarksViewController.swift in Sources */,
 				857EEB752095FFAC008A005C /* HomeRowInstructionsViewController.swift in Sources */,
 				F1617C151E57336D00DEDCAF /* TabManager.swift in Sources */,
 				85C11E4C2090888C00BFFEB4 /* HomeRowReminder.swift in Sources */,

@@ -56,7 +56,7 @@ class BookmarksManager {
         dataStore.addBookmark(bookmark)
     }
     
-    func buildJson() -> Data {
+    func exportJson() -> Data {
         var bookmarks = [ExportedBookmark]()
         if let links = dataStore.bookmarks {
             for link in links {
@@ -65,6 +65,25 @@ class BookmarksManager {
         }
         
         return (try? JSONEncoder().encode(BookmarksJson(bookmarks: bookmarks))) ?? "{}".data(using: .utf8)!
+    }
+    
+    func importJson(from data: Data) -> Bool {
+        
+        guard let bookmarksJson = try? JSONDecoder().decode(BookmarksJson.self, from: data) else {
+            return false
+        }
+        
+        guard let bookmarks = bookmarksJson.bookmarks else {
+            // JSON was valid, but empty so consider them imported
+            return true
+        }
+        
+        for bookmark in bookmarks {
+            guard let url = URL(string: bookmark.url) else { continue }
+            save(bookmark: Link(title: bookmark.title, url: url))
+        }
+        
+        return true
     }
     
     func delete(itemAtIndex index: Int) {

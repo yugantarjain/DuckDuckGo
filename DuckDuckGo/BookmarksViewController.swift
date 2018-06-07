@@ -65,7 +65,6 @@ class BookmarksViewController: UITableViewController {
         let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         menu.addAction(menuEditAction())
         menu.addAction(menuExportAction())
-        menu.addAction(menuImportAction())
         menu.addAction(menuCancelAction())
 
         present(controller: menu, fromButtonItem: editButtonItem)
@@ -87,12 +86,6 @@ class BookmarksViewController: UITableViewController {
         })
     }
     
-    private func menuImportAction() -> UIAlertAction {
-        return UIAlertAction(title: "Import", style: .default, handler: { actionButton in
-            self.startEditing()
-        })
-    }
-
     @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
         if tableView.isEditing && !dataSource.isEmpty {
             finishEditing()

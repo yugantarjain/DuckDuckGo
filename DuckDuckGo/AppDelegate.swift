@@ -82,9 +82,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         Logger.log(text: "App launched with url \(url.absoluteString)")
         clearNavigationStack()
+        
         if AppDeepLinks.isQuickLink(url: url) {
+            
             let query = AppDeepLinks.query(fromQuickLink: url)
             mainViewController?.loadQueryInNewTab(query)
+            
+        } else if AppDeepLinks.isBookmarks(url: url) {
+            
+            if let uid = url.host {
+                mainViewController?.importBookmarks(uid: uid)
+            }
+            
         }
         return true
     }

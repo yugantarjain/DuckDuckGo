@@ -23,9 +23,9 @@ import Foundation
 public struct AppDeepLinks {
     
     public static let launch = "ddgLaunch://"
-    
     public static let quickLink = "ddgQuickLink://"
-    
+    public static let bookmarks = "ddgBookmarks://"
+
     public static let aboutLink = URL(string: "\(AppDeepLinks.quickLink)duckduckgo.com/about")!
     public static let feedbackLink = URL(string: "\(AppDeepLinks.quickLink)duckduckgo.com/feedback")!
 
@@ -39,6 +39,13 @@ public struct AppDeepLinks {
     public static func isQuickLink(url: URL) -> Bool {
         if let scheme = url.scheme {
             return AppDeepLinks.quickLink.lowercased().contains(scheme.lowercased())
+        }
+        return false
+    }
+    
+    public static func isBookmarks(url: URL) -> Bool {
+        if let scheme = url.scheme {
+            return AppDeepLinks.bookmarks.lowercased().contains(scheme.lowercased())
         }
         return false
     }

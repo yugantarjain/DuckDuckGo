@@ -17,12 +17,8 @@ class ExportBookmarksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        applyCorners()
-        
-        DispatchQueue.global(qos: .utility).async {
-            self.startExport()
-        }
-        
+        applyCorners() 
+        startExport()
     }
     
     private func applyCorners() {
@@ -32,7 +28,7 @@ class ExportBookmarksViewController: UIViewController {
     
     private func startExport() {
         
-        let json = bookmarks.buildJson()
+        let json = bookmarks.exportJson()
         
         var urlRequest = URLRequest(url: URL(string:"https://ddgbookmarks-demo.vapor.cloud/bookmarks/")!)
         urlRequest.httpMethod = "POST"
@@ -40,6 +36,12 @@ class ExportBookmarksViewController: UIViewController {
         Alamofire.request(urlRequest)
             .validate(statusCode: 201...201)
             .response { response in
+                
+                guard response.error == nil else {
+                    self.handleLocation(nil)
+                    return
+                }
+                
                 let location = response.response?.allHeaderFields["Location"] as? String
                 self.handleLocation(location)
             }
