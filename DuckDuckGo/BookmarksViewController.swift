@@ -23,7 +23,7 @@ import Core
 
 class BookmarksViewController: UITableViewController {
     
-    @IBOutlet weak var editButton: UIBarButtonItem!
+    @IBOutlet weak var actionButton: UIBarButtonItem!
     
     weak var delegate: BookmarksDelegate?
     
@@ -33,7 +33,7 @@ class BookmarksViewController: UITableViewController {
         super.viewDidLoad()
         addAplicationActiveObserver()
         configureTableView()
-        refreshEditButton()
+        refreshActionButton()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -56,18 +56,43 @@ class BookmarksViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    private func refreshEditButton() {
-        if dataSource.isEmpty {
-            disableEditButton()
-        } else {
-            enableEditButton()
-        }
+    private func refreshActionButton() {
+        actionButton.isEnabled = !dataSource.isEmpty
     }
     
-    @IBAction func onEditPressed(_ sender: UIBarButtonItem) {
-        startEditing()
+    @IBAction func onActionPressed(_ sender: UIBarButtonItem) {
+     
+        let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        menu.addAction(menuEditAction())
+        menu.addAction(menuExportAction())
+        menu.addAction(menuImportAction())
+        menu.addAction(menuCancelAction())
+
+        present(controller: menu, fromButtonItem: editButtonItem)
     }
     
+    private func menuCancelAction() -> UIAlertAction {
+        return UIAlertAction(title: "Cancel", style: .cancel)
+    }
+    
+    private func menuEditAction() -> UIAlertAction {
+        return UIAlertAction(title: "Edit", style: .default, handler: { actionButton in
+            self.startEditing()
+        })
+    }
+    
+    private func menuExportAction() -> UIAlertAction {
+        return UIAlertAction(title: "Export", style: .default, handler: { actionButton in
+            self.performSegue(withIdentifier: "exportBookmarks", sender: self)
+        })
+    }
+    
+    private func menuImportAction() -> UIAlertAction {
+        return UIAlertAction(title: "Import", style: .default, handler: { actionButton in
+            self.startEditing()
+        })
+    }
+
     @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
         if tableView.isEditing && !dataSource.isEmpty {
             finishEditing()
@@ -78,22 +103,12 @@ class BookmarksViewController: UITableViewController {
     
     private func startEditing() {
         tableView.isEditing = true
-        disableEditButton()
+        actionButton.isEnabled = false
     }
     
     private func finishEditing() {
         tableView.isEditing = false
-        refreshEditButton()
-    }
-    
-    private func enableEditButton() {
-        editButton.title = UserText.navigationTitleEdit
-        editButton.isEnabled = true
-    }
-    
-    private func disableEditButton() {
-        editButton.title = ""
-        editButton.isEnabled = false
+        refreshActionButton()
     }
     
     fileprivate func showEditBookmarkAlert(forIndex index: Int) {

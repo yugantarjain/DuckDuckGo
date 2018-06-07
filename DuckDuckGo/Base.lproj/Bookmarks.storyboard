@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="LwJ-9t-P9z">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="proximanova-regular.otf">
+            <string>ProximaNova-Regular</string>
+        </array>
         <array key="proximanova-semibold.otf">
             <string>ProximaNova-Semibold</string>
         </array>
@@ -39,7 +42,7 @@
         <!--Bookmarks-->
         <scene sceneID="rqJ-jV-QgT">
             <objects>
-                <tableViewController id="aqL-Wl-TTD" customClass="BookmarksViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController modalTransitionStyle="crossDissolve" id="aqL-Wl-TTD" customClass="BookmarksViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="V5q-dM-Log">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -113,9 +116,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Bookmarks" id="tVt-jc-YaY">
-                        <barButtonItem key="leftBarButtonItem" id="V4E-YN-xud">
+                        <barButtonItem key="leftBarButtonItem" image="Menu" id="V4E-YN-xud">
                             <connections>
-                                <action selector="onEditPressed:" destination="aqL-Wl-TTD" id="gaA-92-zAb"/>
+                                <action selector="onActionPressed:" destination="aqL-Wl-TTD" id="o59-pB-Qvf"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="1oZ-re-yKW">
@@ -125,15 +128,74 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="editButton" destination="V4E-YN-xud" id="w11-ER-wKw"/>
+                        <outlet property="actionButton" destination="V4E-YN-xud" id="GMr-Op-cJH"/>
+                        <segue destination="Lv2-4U-KaU" kind="presentation" identifier="exportBookmarks" modalPresentationStyle="overFullScreen" modalTransitionStyle="crossDissolve" id="L5V-cY-FKl"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MVk-wm-1t5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2049" y="805"/>
         </scene>
+        <!--Export Bookmarks View Controller-->
+        <scene sceneID="KFf-iA-QVe">
+            <objects>
+                <viewController id="Lv2-4U-KaU" customClass="ExportBookmarksViewController" customModule="DuckDuckGo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Vdg-hi-V8Y"/>
+                        <viewControllerLayoutGuide type="bottom" id="aVZ-3j-lv1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pzs-g7-hZV">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ev-LU-8hC">
+                                <rect key="frame" x="107" y="259" width="160" height="149"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="RS0-Eh-QzP">
+                                        <rect key="frame" x="70" y="64" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exporting bookmarks..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BhK-RL-Amp">
+                                        <rect key="frame" x="10.5" y="21" width="140" height="14"/>
+                                        <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bRn-KH-38j">
+                                        <rect key="frame" x="56" y="111" width="48" height="30"/>
+                                        <state key="normal" title="Cancel"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="bRn-KH-38j" firstAttribute="centerX" secondItem="7ev-LU-8hC" secondAttribute="centerX" id="3A6-UP-Op4"/>
+                                    <constraint firstItem="BhK-RL-Amp" firstAttribute="width" secondItem="7ev-LU-8hC" secondAttribute="width" constant="-20" id="Ej4-Tn-CvJ"/>
+                                    <constraint firstItem="BhK-RL-Amp" firstAttribute="centerX" secondItem="7ev-LU-8hC" secondAttribute="centerX" id="O7y-1T-wic"/>
+                                    <constraint firstAttribute="width" constant="160" id="ON6-jl-0FL"/>
+                                    <constraint firstItem="RS0-Eh-QzP" firstAttribute="centerY" secondItem="7ev-LU-8hC" secondAttribute="centerY" id="SYe-Df-6VX"/>
+                                    <constraint firstAttribute="height" constant="149" id="ZgX-rb-nDu"/>
+                                    <constraint firstItem="BhK-RL-Amp" firstAttribute="top" secondItem="7ev-LU-8hC" secondAttribute="top" constant="21" id="a7r-fc-Rhi"/>
+                                    <constraint firstItem="RS0-Eh-QzP" firstAttribute="centerX" secondItem="7ev-LU-8hC" secondAttribute="centerX" id="caQ-81-7RF"/>
+                                    <constraint firstAttribute="bottom" secondItem="bRn-KH-38j" secondAttribute="bottom" constant="8" id="ju3-Xm-Z6s"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="0.25152504280821919" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="7ev-LU-8hC" firstAttribute="centerY" secondItem="pzs-g7-hZV" secondAttribute="centerY" id="1Jc-R0-ra6"/>
+                            <constraint firstItem="7ev-LU-8hC" firstAttribute="centerX" secondItem="pzs-g7-hZV" secondAttribute="centerX" id="r99-Ic-KTr"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="infoView" destination="7ev-LU-8hC" id="Xoe-6c-i6A"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fyQ-UO-kbK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3013.5999999999999" y="804.64767616191909"/>
+        </scene>
     </scenes>
     <resources>
         <image name="GlobeSmall" width="16" height="16"/>
+        <image name="Menu" width="24" height="24"/>
     </resources>
 </document>

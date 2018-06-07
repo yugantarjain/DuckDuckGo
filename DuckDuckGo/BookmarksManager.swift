@@ -21,6 +21,19 @@ import Core
 
 class BookmarksManager {
     
+    struct ExportedBookmark: Encodable, Decodable {
+        
+        var title: String
+        var url: String
+        
+    }
+    
+    struct BookmarksJson: Encodable, Decodable {
+        
+        var bookmarks: [ExportedBookmark]?
+        
+    }
+    
     private let dataStore: BookmarkUserDefaults
 
     init(dataStore: BookmarkUserDefaults = BookmarkUserDefaults()) {
@@ -41,6 +54,17 @@ class BookmarksManager {
     
     func save(bookmark: Link) {
         dataStore.addBookmark(bookmark)
+    }
+    
+    func buildJson() -> Data {
+        var bookmarks = [ExportedBookmark]()
+        if let links = dataStore.bookmarks {
+            for link in links {
+                bookmarks.append(ExportedBookmark(title: link.title ?? link.url.host ?? "", url: link.url.absoluteString))
+            }
+        }
+        
+        return (try? JSONEncoder().encode(BookmarksJson(bookmarks: bookmarks))) ?? "{}".data(using: .utf8)!
     }
     
     func delete(itemAtIndex index: Int) {
