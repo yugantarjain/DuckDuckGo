@@ -8,11 +8,28 @@
 
 import UIKit
 import Alamofire
+import AVFoundation
 
+protocol ImportBookmarksDelegate: class {
+    
+    func finished(controller: ImportBookmarksViewController)
+    
+    
+}
+
+// https://www.hackingwithswift.com/example-code/media/how-to-scan-a-qr-code
 class ImportBookmarksViewController: UIViewController {
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var scanningView: UIView!
     @IBOutlet weak var infoView: UIView!
+    @IBOutlet weak var closeButton: UIButton!
     
+    weak var delegate: ImportBookmarksDelegate?
+    
+    var captureSession: AVCaptureSession!
+    var previewLayer: AVCaptureVideoPreviewLayer!
+
     let bookmarksManager = BookmarksManager()
     
     var uid: String?
@@ -21,9 +38,27 @@ class ImportBookmarksViewController: UIViewController {
         super.viewDidLoad()
         applyCorners()
 
-        // TODO if uid is nil, scan a QR code?
+        if uid != nil {
+            startImport()
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if uid == nil {
+            startScanning()
+        }
+
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         
-        startImport()
+        if (captureSession?.isRunning == true) {
+            captureSession.stopRunning()
+        }
+
     }
 
     private func applyCorners() {
@@ -31,8 +66,68 @@ class ImportBookmarksViewController: UIViewController {
         infoView.layer.masksToBounds = true
     }
     
-    private func startImport() {
+    private func startScanning() {
+        scanningView.isHidden = false
+        closeButton.isHidden = false
+        activityIndicator.isHidden = true
         
+        let view = scanningView!
+        
+        view.backgroundColor = UIColor.black
+        captureSession = AVCaptureSession()
+        
+        guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else { return }
+        let videoInput: AVCaptureDeviceInput
+        
+        do {
+            videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
+        } catch {
+            return
+        }
+        
+        if (captureSession.canAddInput(videoInput)) {
+            captureSession.addInput(videoInput)
+        } else {
+            scanningFailed()
+            return
+        }
+        
+        let metadataOutput = AVCaptureMetadataOutput()
+        
+        if (captureSession.canAddOutput(metadataOutput)) {
+            captureSession.addOutput(metadataOutput)
+            
+            metadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            metadataOutput.metadataObjectTypes = [.qr]
+        } else {
+            scanningFailed()
+            return
+        }
+        
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.frame = view.layer.bounds
+        previewLayer.videoGravity = .resizeAspectFill
+        view.layer.addSublayer(previewLayer)
+        
+        captureSession.startRunning()
+    }
+    
+    private func scanningFailed() {
+        UIApplication.shared.keyWindow?.showBottomToast("Failed to start scanning")
+        delegate?.finished(controller: self)
+        dismiss(animated: true)
+    }
+    
+    // fix orientation when scanning
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return uid == nil ? .portrait : super.supportedInterfaceOrientations
+    }
+    
+    private func startImport() {
+        scanningView.isHidden = true
+        closeButton.isHidden = true
+        activityIndicator.isHidden = false
+
         Alamofire.request(URL(string: "https://ddgbookmarks-demo.vapor.cloud/bookmarks/\(uid!)")!)
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
@@ -55,6 +150,7 @@ class ImportBookmarksViewController: UIViewController {
     
     private func handleError() {
         UIApplication.shared.keyWindow?.showBottomToast("Failed to import bookmarks, try again later")
+        delegate?.finished(controller: self)
         dismiss(animated: true)
     }
     
@@ -64,8 +160,28 @@ class ImportBookmarksViewController: UIViewController {
             return
         }
         
+        delegate?.finished(controller: self)
         UIApplication.shared.keyWindow?.showBottomToast("Bookmarks imported")
         dismiss(animated: true)
     }
     
 }
+
+extension ImportBookmarksViewController: AVCaptureMetadataOutputObjectsDelegate {
+    
+    func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+        captureSession.stopRunning()
+        
+        if let metadataObject = metadataObjects.first {
+            guard let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject else { return }
+            guard let stringValue = readableObject.stringValue else { return }
+            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+            uid = stringValue
+        }
+        
+        startImport()
+    }
+    
+}
+
+

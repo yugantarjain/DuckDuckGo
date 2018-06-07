@@ -33,7 +33,11 @@ class BookmarksViewController: UITableViewController {
         super.viewDidLoad()
         addAplicationActiveObserver()
         configureTableView()
-        refreshActionButton()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -44,6 +48,12 @@ class BookmarksViewController: UITableViewController {
         }
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let controller = segue.destination as? ImportBookmarksViewController {
+            controller.delegate = self
+        }
+    }
+    
     private func addAplicationActiveObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(onApplicationBecameActive), name: .UIApplicationDidBecomeActive, object: nil)
     }
@@ -56,15 +66,16 @@ class BookmarksViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    private func refreshActionButton() {
-        actionButton.isEnabled = !dataSource.isEmpty
-    }
-    
     @IBAction func onActionPressed(_ sender: UIBarButtonItem) {
      
         let menu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        menu.addAction(menuEditAction())
-        menu.addAction(menuExportAction())
+        
+        if !dataSource.isEmpty {
+            menu.addAction(menuEditAction())
+            menu.addAction(menuExportAction())
+        }
+        
+        menu.addAction(menuImportAction())
         menu.addAction(menuCancelAction())
 
         present(controller: menu, fromButtonItem: editButtonItem)
@@ -85,7 +96,13 @@ class BookmarksViewController: UITableViewController {
             self.performSegue(withIdentifier: "exportBookmarks", sender: self)
         })
     }
-    
+
+    private func menuImportAction() -> UIAlertAction {
+        return UIAlertAction(title: "Import", style: .default, handler: { actionButton in
+            self.performSegue(withIdentifier: "importBookmarks", sender: self)
+        })
+    }
+
     @IBAction func onDonePressed(_ sender: UIBarButtonItem) {
         if tableView.isEditing && !dataSource.isEmpty {
             finishEditing()
@@ -101,7 +118,7 @@ class BookmarksViewController: UITableViewController {
     
     private func finishEditing() {
         tableView.isEditing = false
-        refreshActionButton()
+        actionButton.isEnabled = true
     }
     
     fileprivate func showEditBookmarkAlert(forIndex index: Int) {
@@ -131,5 +148,13 @@ class BookmarksViewController: UITableViewController {
         dismiss(animated: true, completion: nil)
     }
 
+}
+
+extension BookmarksViewController: ImportBookmarksDelegate {
+    
+    func finished(controller: ImportBookmarksViewController) {
+        tableView.reloadData()
+    }
+    
 }
 

@@ -85,7 +85,7 @@ class ExportBookmarksViewController: UIViewController {
         
         if let filter = CIFilter(name: "CIQRCodeGenerator") {
             filter.setValue(data, forKey: "inputMessage")
-            let transform = CGAffineTransform(scaleX: 5, y: 5)
+            let transform = CGAffineTransform(scaleX: 7, y: 7)
             
             if let output = filter.outputImage?.transformed(by: transform) {
                 return UIImage(ciImage: output)
