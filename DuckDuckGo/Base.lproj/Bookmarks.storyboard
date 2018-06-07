@@ -150,33 +150,55 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ev-LU-8hC">
-                                <rect key="frame" x="107" y="259" width="160" height="149"/>
+                                <rect key="frame" x="87" y="208.5" width="200" height="250"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UI7-H9-PB7">
+                                        <rect key="frame" x="20" y="43" width="160" height="160"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="160" id="mCz-6v-uqD"/>
+                                            <constraint firstAttribute="height" constant="160" id="n3O-oi-CeO"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Logo" translatesAutoresizingMaskIntoConstraints="NO" id="SdZ-ki-sSG">
+                                        <rect key="frame" x="83.5" y="109" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="AI0-OF-37s"/>
+                                            <constraint firstAttribute="height" constant="32" id="XoM-bB-h6h"/>
+                                        </constraints>
+                                    </imageView>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="RS0-Eh-QzP">
-                                        <rect key="frame" x="70" y="64" width="20" height="20"/>
+                                        <rect key="frame" x="90" y="114.5" width="20" height="20"/>
                                     </activityIndicatorView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exporting bookmarks..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BhK-RL-Amp">
-                                        <rect key="frame" x="10.5" y="21" width="140" height="14"/>
+                                        <rect key="frame" x="10.5" y="21" width="180" height="14"/>
                                         <fontDescription key="fontDescription" name="ProximaNova-Regular" family="Proxima Nova" pointSize="14"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bRn-KH-38j">
-                                        <rect key="frame" x="56" y="111" width="48" height="30"/>
-                                        <state key="normal" title="Cancel"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oaK-Cc-Jpo">
+                                        <rect key="frame" x="80.5" y="211" width="39" height="31"/>
+                                        <state key="normal" title="Close"/>
+                                        <connections>
+                                            <action selector="dismiss" destination="Lv2-4U-KaU" eventType="touchUpInside" id="HGO-Mk-qQP"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="bRn-KH-38j" firstAttribute="centerX" secondItem="7ev-LU-8hC" secondAttribute="centerX" id="3A6-UP-Op4"/>
                                     <constraint firstItem="BhK-RL-Amp" firstAttribute="width" secondItem="7ev-LU-8hC" secondAttribute="width" constant="-20" id="Ej4-Tn-CvJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="oaK-Cc-Jpo" secondAttribute="bottom" constant="8" id="FOs-S5-7vc"/>
                                     <constraint firstItem="BhK-RL-Amp" firstAttribute="centerX" secondItem="7ev-LU-8hC" secondAttribute="centerX" id="O7y-1T-wic"/>
-                                    <constraint firstAttribute="width" constant="160" id="ON6-jl-0FL"/>
+                                    <constraint firstAttribute="width" constant="200" id="ON6-jl-0FL"/>
+                                    <constraint firstItem="SdZ-ki-sSG" firstAttribute="centerX" secondItem="7ev-LU-8hC" secondAttribute="centerX" id="OVX-WV-j6Q"/>
                                     <constraint firstItem="RS0-Eh-QzP" firstAttribute="centerY" secondItem="7ev-LU-8hC" secondAttribute="centerY" id="SYe-Df-6VX"/>
-                                    <constraint firstAttribute="height" constant="149" id="ZgX-rb-nDu"/>
+                                    <constraint firstItem="SdZ-ki-sSG" firstAttribute="centerY" secondItem="7ev-LU-8hC" secondAttribute="centerY" id="Wb6-Tb-tjz"/>
+                                    <constraint firstAttribute="height" constant="250" id="ZgX-rb-nDu"/>
                                     <constraint firstItem="BhK-RL-Amp" firstAttribute="top" secondItem="7ev-LU-8hC" secondAttribute="top" constant="21" id="a7r-fc-Rhi"/>
                                     <constraint firstItem="RS0-Eh-QzP" firstAttribute="centerX" secondItem="7ev-LU-8hC" secondAttribute="centerX" id="caQ-81-7RF"/>
-                                    <constraint firstAttribute="bottom" secondItem="bRn-KH-38j" secondAttribute="bottom" constant="8" id="ju3-Xm-Z6s"/>
+                                    <constraint firstItem="UI7-H9-PB7" firstAttribute="top" secondItem="BhK-RL-Amp" secondAttribute="bottom" constant="8" id="fKj-Pw-9gJ"/>
+                                    <constraint firstItem="oaK-Cc-Jpo" firstAttribute="top" secondItem="UI7-H9-PB7" secondAttribute="bottom" constant="8" id="loC-Ub-n5D"/>
+                                    <constraint firstItem="UI7-H9-PB7" firstAttribute="centerX" secondItem="7ev-LU-8hC" secondAttribute="centerX" id="quy-PC-1SG"/>
+                                    <constraint firstItem="oaK-Cc-Jpo" firstAttribute="centerX" secondItem="7ev-LU-8hC" secondAttribute="centerX" id="rLX-Kb-3Wc"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -187,7 +209,12 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="RS0-Eh-QzP" id="gQf-cP-yn4"/>
+                        <outlet property="closeButton" destination="oaK-Cc-Jpo" id="a34-IS-4P9"/>
                         <outlet property="infoView" destination="7ev-LU-8hC" id="Xoe-6c-i6A"/>
+                        <outlet property="logo" destination="SdZ-ki-sSG" id="RvL-9s-5hf"/>
+                        <outlet property="qrcodeImage" destination="UI7-H9-PB7" id="fjW-2l-Gyu"/>
+                        <outlet property="titleLabel" destination="BhK-RL-Amp" id="81l-Qf-37y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fyQ-UO-kbK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -254,6 +281,7 @@
     </scenes>
     <resources>
         <image name="GlobeSmall" width="16" height="16"/>
+        <image name="Logo" width="119" height="119"/>
         <image name="Menu" width="24" height="24"/>
     </resources>
 </document>
