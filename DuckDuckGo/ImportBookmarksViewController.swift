@@ -20,6 +20,7 @@ protocol ImportBookmarksDelegate: class {
 // https://www.hackingwithswift.com/example-code/media/how-to-scan-a-qr-code
 class ImportBookmarksViewController: UIViewController {
     
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var scanningView: UIView!
     @IBOutlet weak var infoView: UIView!
@@ -60,13 +61,19 @@ class ImportBookmarksViewController: UIViewController {
         }
 
     }
-
+    
+    @IBAction func dismiss() {
+        dismiss(animated: true)
+    }
+    
     private func applyCorners() {
         infoView.layer.cornerRadius = 5
         infoView.layer.masksToBounds = true
     }
     
     private func startScanning() {
+        titleLabel.text = "Scan QRCode"
+        
         scanningView.isHidden = false
         closeButton.isHidden = false
         activityIndicator.isHidden = true
@@ -124,6 +131,8 @@ class ImportBookmarksViewController: UIViewController {
     }
     
     private func startImport() {
+        titleLabel.text = "Importing..."
+        
         scanningView.isHidden = true
         closeButton.isHidden = true
         activityIndicator.isHidden = false

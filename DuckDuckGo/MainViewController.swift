@@ -94,8 +94,15 @@ class MainViewController: UIViewController {
     
     func importBookmarks(uid: String) {
         print(#function, uid)
-        importBookmarksUID = uid
-        performSegue(withIdentifier: "importBookmarks", sender: nil)
+        
+        let prompt = UIAlertController(title: "Import Bookmarks", message: "You should only download bookmarks from trusted sources.\n\nAre you sure you want to download these bookmarks?", preferredStyle: .alert)
+        prompt.addAction(UIAlertAction(title: "Yes", style: .default, handler: { action in
+            self.importBookmarksUID = uid
+            self.performSegue(withIdentifier: "importBookmarks", sender: nil)
+        }))
+        prompt.addAction(UIAlertAction(title: "No", style: .default))
+        show(prompt, sender: self)
+        
     }
  
     private func configureTabManager() {

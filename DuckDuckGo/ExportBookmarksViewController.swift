@@ -23,7 +23,7 @@ class ExportBookmarksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.blur(style: .regular)
+        // view.blur(style: .regular)
         closeButton.isHidden = true
         logo.isHidden = true
         applyCorners()
